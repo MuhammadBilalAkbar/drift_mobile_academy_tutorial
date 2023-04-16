@@ -6,7 +6,7 @@ import 'package:drift/drift.dart' as drift;
 import '/data/local/db/app_db.dart';
 import '/widget/custom_date_picker_form_field.dart';
 
-import '../widget/custom_text_form_field.dart';
+import '/widget/custom_text_form_field.dart';
 
 class EditOrDeleteEmployeeScreen extends StatefulWidget {
   const EditOrDeleteEmployeeScreen({
@@ -54,7 +54,11 @@ class _EditOrDeleteEmployeeScreenState
           title: const Text('Edit Employee'),
           actions: [
             IconButton(
-              onPressed: editEmployee,
+              onPressed: () {
+                editEmployee();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
+              },
               icon: const Icon(Icons.save),
             ),
             IconButton(
@@ -67,29 +71,31 @@ class _EditOrDeleteEmployeeScreenState
           padding: const EdgeInsets.all(8.0),
           child: Form(
             key: formKey,
-            child: Column(
-              children: [
-                CustomTextFormField(
-                  textLabel: 'User name',
-                  controller: userNameController,
-                ),
-                const SizedBox(height: 8),
-                CustomTextFormField(
-                  textLabel: 'First name',
-                  controller: firstNameController,
-                ),
-                const SizedBox(height: 8),
-                CustomTextFormField(
-                  textLabel: 'Last name',
-                  controller: lastNameController,
-                ),
-                const SizedBox(height: 8),
-                CustomDatePickerFormField(
-                  dateOfBirthController: dateOfBirthController,
-                  txtLabel: 'Date of Birth',
-                  callback: () => pickDateOfBirth(context),
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CustomTextFormField(
+                    textLabel: 'User name',
+                    controller: userNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textLabel: 'First name',
+                    controller: firstNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textLabel: 'Last name',
+                    controller: lastNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomDatePickerFormField(
+                    dateOfBirthController: dateOfBirthController,
+                    txtLabel: 'Date of Birth',
+                    callback: () => pickDateOfBirth(context),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -126,30 +132,32 @@ class _EditOrDeleteEmployeeScreenState
 
   void deleteEmployee() {
     // db.deleteEmployee(entity);
-    db.deleteEmployee(widget.id).then((value) {
-      Navigator.pushReplacementNamed(context, '/');
-      return ScaffoldMessenger.of(context).showMaterialBanner(
-        MaterialBanner(
-          backgroundColor: Colors.pink,
-          content: Text(
-            'Employee deleted: ${widget.id}',
-            style: const TextStyle(color: Colors.white),
-          ),
-          actions: [
-            Builder(
-              builder: (context) => TextButton(
-                onPressed: () =>
-                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
-                child: const Text(
-                  'Close',
-                  style: TextStyle(color: Colors.white),
+    db.deleteEmployee(widget.id).then(
+      (value) {
+        return ScaffoldMessenger.of(context).showMaterialBanner(
+          MaterialBanner(
+            backgroundColor: Colors.pink,
+            content: Text(
+              'Employee deleted: ${widget.id}',
+              style: const TextStyle(color: Colors.white),
+            ),
+            actions: [
+              Builder(
+                builder: (context) => TextButton(
+                  onPressed: () =>
+                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
+                  child: const Text(
+                    'Close',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      );
-    });
+            ],
+          ),
+        );
+      },
+    );
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 
   void editEmployee() {
@@ -187,6 +195,7 @@ class _EditOrDeleteEmployeeScreenState
               ),
             ),
           );
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
     }
   }
 

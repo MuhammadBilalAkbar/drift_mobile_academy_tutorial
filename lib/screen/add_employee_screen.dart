@@ -6,7 +6,7 @@ import 'package:drift/drift.dart' as drift;
 import '/data/local/db/app_db.dart';
 import '/widget/custom_date_picker_form_field.dart';
 
-import '../widget/custom_text_form_field.dart';
+import '/widget/custom_text_form_field.dart';
 
 class AddEmployeeScreen extends StatefulWidget {
   const AddEmployeeScreen({Key? key}) : super(key: key);
@@ -55,29 +55,31 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Form(
             key: formKey,
-            child: Column(
-              children: [
-                CustomTextFormField(
-                  textLabel: 'User name',
-                  controller: userNameController,
-                ),
-                const SizedBox(height: 8),
-                CustomTextFormField(
-                  textLabel: 'First name',
-                  controller: firstNameController,
-                ),
-                const SizedBox(height: 8),
-                CustomTextFormField(
-                  textLabel: 'Last name',
-                  controller: lastNameController,
-                ),
-                const SizedBox(height: 8),
-                CustomDatePickerFormField(
-                  dateOfBirthController: dateOfBirthController,
-                  txtLabel: 'Date of Birth',
-                  callback: () => pickDateOfBirth(context),
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CustomTextFormField(
+                    textLabel: 'User name',
+                    controller: userNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textLabel: 'First name',
+                    controller: firstNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFormField(
+                    textLabel: 'Last name',
+                    controller: lastNameController,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomDatePickerFormField(
+                    dateOfBirthController: dateOfBirthController,
+                    txtLabel: 'Date of Birth',
+                    callback: () => pickDateOfBirth(context),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -1,7 +1,7 @@
 # drift_mobile_academy_tutorial
 
 https://stackoverflow.com/questions/44358331/dart-analyzer-is-not-parsing-the-dynamic-generated-files
-
+![]()
 A new Flutter project.
 
 ## Getting Started
